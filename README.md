@@ -1,6 +1,6 @@
 ![Input Affix Logo](http://static.jcoc611.com/lab/InputAffix/logo.png)
 
-*Tested on: Chrome 43.0.2, Firefox 36.0.4.*
+*Tested on: Chrome 43.0.2, Firefox 36.0.4, Internet Explorer 10.0.9.*
 
 *Note: this plugin requires jQuery version 1.11 or above.*
 
