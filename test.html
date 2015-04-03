@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery InputAffix v0.1.0 Test</title>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript" src="InputAffix.0.1.0.js"></script>
+	<script type="text/javascript">
+	$(function(){
+		$("#testPrefix").prefix("Test: ");
+		$("#testSuffix").suffix("%");
+		$("#testDual").prefix("Angle: ").suffix("°");
+	});
+	</script>
+</head>
+<body>
+	<h1>Input Affix v0.1.0 Test</h1>
+	<span>Prefix test <i>(Test: )</i> </span><input id="testPrefix" value="something"></input><br/><br/>
+	<span>Suffix test <i>(%)</i> </span><input id="testSuffix" value="100"></input><br/><br/>
+	<span>Dual test <i>(Angle: ...°)</i> </span><input id="testDual" value="100"></input><br/><br/>
+	<span>Try it out for your self!</span>
+</body>
+</html>
