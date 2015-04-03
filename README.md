@@ -1,6 +1,6 @@
 ![Input Affix Logo](http://static.jcoc611.com/lab/InputAffix/logo.png)
 
-*Tested on: Chrome 43.0.2, Firefox 36.0.4.*
+*Tested on: Chrome 43.0.2, Firefox 36.0.4, Internet Explorer 10.*
 
 *Note: this plugin requires jQuery version 1.11 or above.*
 
@@ -13,14 +13,14 @@ jQuery("#fieldThatNeedsPercentage").suffix("%");
 jQuery("#fieldThatNeedsAngle").suffix("°");
 ```
 
-You might cosider alternatively placing your prefix/suffix *outside* of the input field, but if you are serious about including it within the input field (i.e you want your users to be able to select the prefix or/and suffix when they interact with your input field), then use this plugin to easily add such.
+You might cosider alternatively placing your prefix/suffix *outside* of the input field, but if you are serious about including it within the input field (i.e you want your users to be able to select the prefix and/or suffix when they interact with your input field), then use this plugin to easily add such.
 
 ## Usage
-If you want to use hosted the hosted libraries, just add the following to the head of your page:
+If you want to use the hosted libraries, just add the following to the head of your page:
 
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="http://static.jcoc611.com/hosted/js/InputAffix.0.1.1.min.js"></script>
+<script src="http://static.jcoc611.com/hosted/js/InputAffix.0.1.2.min.js"></script>
 ```
 
 Otherwise, you can host your own version of jQuery and Input Affix to suit your needs. After you have included both libraries, adding a prefix or suffix is easier than writing the HTML for them. Check the documentation out for the detailed explanation:
@@ -48,7 +48,7 @@ jQuery("#percentageField").suffix("%");
 ## Hosted library
 In addition to the GitHub repo, I will also be hosting the minified version of the library at
 
-    http://static.jcoc611.com/hosted/js/InputAffix.0.1.1.min.js
+    http://static.jcoc611.com/hosted/js/InputAffix.0.1.2.min.js
 
 ## Collaborating
 If you have any issues with the code, or have found any bugs, submit an Issue Ticket! Also, if you want to improve/change anything just fork the repo, make your changes, and submit a pull request. I will review it as soon as possible.
