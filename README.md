@@ -20,7 +20,7 @@ If you want to use hosted the hosted libraries, just add the following to the he
 
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://static.jcoc611.com/hosted/js/InputAffix.0.1.0.min.js"></script>
+<script src="http://static.jcoc611.com/hosted/js/InputAffix.0.1.0.min.js"></script>
 ```
 
 Otherwise, you can host your own version of jQuery and Input Affix to suit your needs. After you have included both libraries, adding a prefix or suffix is easier than writing the HTML for them. Check the documentation out for the detailed explanation:
