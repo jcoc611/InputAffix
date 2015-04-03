@@ -1,5 +1,5 @@
 // Created by Juan Camilo Osorio (JCOC611 - jcoc611.com).
-// Version 0.1.0. (Beta).
+// Version 0.1.1. (Beta).
 // Consider giving back by sharing your own code!
 // Licensed under the MIT License. 
 // http://www.opensource.org/licenses/mit-license.php
@@ -24,13 +24,13 @@
 			start = options;
 			end = opt2;
 		} else if (typeof options === "string") {
-			if ((start = t.value.indexOf(options)) > -1) end = start + options[len];
+			if ((start = t.value.indexOf(options)) > -1) end = start + options["length"];
 			else start = null;
 		} else if (Object.prototype.toString.call(options) === "[object RegExp]") {
 			var re = options.exec(t.value);
 			if (re != null) {
 				start = re.index;
-				end = start + re[0][len];
+				end = start + re[0]["length"];
 			}
 		}
 
@@ -55,19 +55,19 @@
 				var selection = document.selection;
 				if (t.tagName.toLowerCase() != "textarea") {
 					var val = this.val(),
-						range = selection[createRange]()[duplicate]();
-					range.moveEnd("character", val[len]);
-					var s = (range.text == "" ? val[len] : val.lastIndexOf(range.text));
-					range = selection[createRange]()[duplicate]();
-					range.moveStart("character", -val[len]);
-					var e = range.text[len];
+						range = selection["createRange"]()["duplicate"]();
+					range.moveEnd("character", val["length"]);
+					var s = (range.text == "" ? val["length"] : val.lastIndexOf(range.text));
+					range = selection["createRange"]()["duplicate"]();
+					range.moveStart("character", -val["length"]);
+					var e = range.text["length"];
 				} else {
-					var range = selection[createRange](),
-						stored_range = range[duplicate]();
+					var range = selection["createRange"](),
+						stored_range = range["duplicate"]();
 					stored_range.moveToElementText(t);
 					stored_range.setEndPoint('EndToEnd', range);
-					var s = stored_range.text[len] - range.text[len],
-						e = s + range.text[len]
+					var s = stored_range.text["length"] - range.text["length"],
+						e = s + range.text["length"]
 				}
 				// End of Modification
 			} else {
@@ -80,7 +80,7 @@
 				end: e,
 				text: te,
 				replace: function(st) {
-					return t.value.substring(0, s) + st + t.value.substring(e, t.value[len])
+					return t.value.substring(0, s) + st + t.value.substring(e, t.value["length"])
 				}
 			}
 		}
