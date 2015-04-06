@@ -2,7 +2,7 @@
 
 *Tested on: Chrome 43.0.2, Firefox 36.0.4, Internet Explorer 10.0.9.*
 
-*Note: this plugin requires jQuery version 1.11 or above.*
+*Note: this plugin requires jQuery version 1.11 or above.* 
 
 Input Affix is a jQuery plugin that allows you to add prefixes and suffixes to your input fields such that when your users type, the suffix or prefix does not change or move, and the user selection is managed accordingly. For example, if you need to add a percentage or degree symbol to one of your fields, it can easily be done by:
 
