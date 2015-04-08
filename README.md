@@ -1,4 +1,4 @@
-![Input Affix Logo](http://static.jcoc611.com/lab/InputAffix/logo.png)
+![Input Affix Logo](http://static.jcoc611.com/lab/InputAffix/logo.png?a=yes)
 
 *Tested on: Chrome 43.0.2, Firefox 36.0.4, Internet Explorer 10.0.9.*
 
