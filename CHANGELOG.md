@@ -1,5 +1,8 @@
 ## Description of changes by version
 
+# v1.0.0
+- Finalized dev version to first stable release.
+
 # v0.1.3
 - Added support for multiple prefixes/suffixes.
 - Added the "prefixchange" and "suffixchange" events.

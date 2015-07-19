@@ -15,7 +15,16 @@ jQuery("#fieldThatNeedsAngle").suffix("°");
 
 You might consider alternatively placing your prefix/suffix *outside* of the input field, but if you are serious about including it within the input field (i.e. you want your users to be able to select the prefix and/or suffix when they interact with your input field), then use this plugin to easily add such.
 
-## Usage
+## Setting Things Up
+This package uses *bower* to handle dependencies. To set things up easily, use:
+
+```bash
+bower install input-affix
+```
+
+This will download and install all required dependencies and InputAffix itself. If you have no idea what bower is, here is a [quick intro.](http://bower.io/).
+
+## Alternative Usage
 If you want to use the hosted libraries, just add the following to the head of your page:
 
 ```html

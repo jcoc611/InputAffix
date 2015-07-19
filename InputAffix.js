@@ -1,11 +1,11 @@
 "use strict";
 // Created by Juan Camilo Osorio (JCOC611 - jcoc611.com).
-// Version 0.1.3. (Beta).
+// Version 1.0.0. (Beta).
 // Consider giving back by sharing your own code!
 // Licensed under the MIT License. 
 // http://www.opensource.org/licenses/mit-license.php
 
-// Includes jQuery Caret v1.02
+// Includes jQuery Caret v1.0.2
 // Slightly modified by JCOC611.
 // Created by C. F., Wong, and also licensed
 // under the MIT License. Find his project here:
@@ -663,5 +663,5 @@
 		});
 		return this;
 	}
-})(jQuery);
+})(window.jQuery);
 //TFIN
