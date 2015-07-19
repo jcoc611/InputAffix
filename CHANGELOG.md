@@ -1,6 +1,6 @@
 ## Description of changes by version
 
-# v1.0.0
+# v1.0.1
 - Finalized dev version to first stable release.
 
 # v0.1.3

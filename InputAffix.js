@@ -1,6 +1,6 @@
 "use strict";
 // Created by Juan Camilo Osorio (JCOC611 - jcoc611.com).
-// Version 1.0.0. (Beta).
+// Version 1.0.1. (Beta, stable).
 // Consider giving back by sharing your own code!
 // Licensed under the MIT License. 
 // http://www.opensource.org/licenses/mit-license.php
