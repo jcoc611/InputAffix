@@ -1,5 +1,10 @@
 ## Description of changes by version
 
+# v1.0.3
+- Fixed bug of multiple selection overwriting prefix.
+- Fixed bug of pasting, which made string upper case.
+- Fixed bug that made the suffix paste patch break.
+
 # v1.0.2
 - Finalized dev version to first stable release.
 
