@@ -292,6 +292,14 @@
 				if(caret.start == caret.end && prefix.substr(caret.start, 1) == input){
 					t.caret({start:caret.start + 1, end:caret.start + 1});
 					e.preventDefault();
+				}else if(caret.start < prefix.length && prefix.substr(caret.start, 1) == input){
+					var newVal = prefix + val.substr(caret.end);
+					if(t.data("suffix")){
+						newVal += t.data("suffix");
+					}
+					t.val(newVal);
+					t.caret({start:caret.start + 1, end:caret.start + 1});
+					e.preventDefault();
 				}else{
 					var end = caret.end;
 					if(end == caret.start) end = prefix.length;
@@ -341,7 +349,7 @@
 				// Set local vars.
 				var prefix = t.data("prefix"),
 					caret = t.caret(),
-					val = t.val().toUpperCase(),
+					val = t.val(),
 					end = caret.end;
 
 				// If prefix list was used, compute new prefix
@@ -381,7 +389,7 @@
 					start: end,
 					end: end
 				});
-
+				
 				// Prevent default paste.
 				e.preventDefault();
 			});
@@ -578,14 +586,14 @@
 			// Fixes some pasting issues.
 			// Works with context menu too.
 
-			var t = this;
+			var t = $(this);
 
 			// Set timeout hack to skip call stack.
 			setTimeout(function(){
 				// Set local vars.
-				var suffix = $(t).data("suffix"),
-					caret = $(t).caret(),
-					val = $(t).val(),
+				var suffix = t.data("suffix"),
+					caret = t.caret(),
+					val = t.val(),
 					start = caret.end;
 
 				// If suffix list was used, compute new suffix
@@ -624,15 +632,15 @@
 				}
 
 				// Set the final value and caret pos.
-				$(t).val(nbody + suffix);
-				$(t).caret({
+				t.val(nbody + suffix);
+				t.caret({
 					start: start,
 					end: start
 				});
-
 				// Prevent default paste.
 				e.preventDefault();
 			}, 1);
+			
 		}).on("change", function(e){
 			var suffix = $(this).data("suffix"),
 				val = $(this).val();
