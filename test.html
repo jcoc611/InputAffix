@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>jQuery InputAffix v1.0.3 Test</title>
+	<title>jQuery InputAffix v1.1.0 Test</title>
 	<meta charset="UTF-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<!-- <script type="text/javascript" src="http://static.jcoc611.com/hosted/js/InputAffix.0.1.3.min.js"></script> -->
@@ -17,11 +17,14 @@
 		$("#testMultipleSuffixes").suffix(["#", "$", "&"]).on("suffixchange", function(e, suff){
 			$("#multipleSuffixesMessage").text(suff);
 		});
+		$("#testPlaceholder").prefix("#");
+		$("#testPlaceholder2").suffix("%");
+		$("#testPlaceholder3").prefix("Angle: ").suffix("°");
 	});
 	</script>
 </head>
 <body>
-	<h1>Input Affix v1.0.3 Test</h1>
+	<h1>Input Affix v1.1.0 Tests</h1>
 	<span>Prefix test <i>(Test: )</i> </span><input id="testPrefix" value="something"></input><br/><br/>
 	<span>Suffix test <i>(%)</i> </span><input id="testSuffix" value="100"></input><br/><br/>
 	<span>Dual test <i>(Angle: ...°)</i> </span><input id="testDual" value="100"></input><br/><br/>
@@ -29,6 +32,9 @@
 	<span>Current Prefix for input above: <i id="multiplePrefixesMessage">#</i></span><br/><br/>
 	<span>Multiple suffixes <i>(#, $, or &amp;)</i></span><input id="testMultipleSuffixes" value="000"></input><br/><br/>
 	<span>Current Suffix for input above: <i id="multipleSuffixesMessage">#</i></span><br/><br/>
+	<span>Placeholder test <i>(#)</i> </span><input id="testPlaceholder" placeholder="#hashtag"></input><br/><br/>
+	<span>Placeholder test 2 <i>(%)</i> </span><input id="testPlaceholder2" placeholder="100%"></input><br/><br/>
+	<span>Placeholder test 3 <i>(Angle: ...°)</i> </span><input id="testPlaceholder3" placeholder="Angle: 180°"></input><br/><br/>
 	<span>Try it out for your self!</span>
 </body>
 </html>
