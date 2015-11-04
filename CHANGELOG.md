@@ -1,5 +1,9 @@
 ## Description of changes by version
 
+# v1.1.0
+- Added support for placeholders
+- Fixed a bug with affixValue()
+
 # v1.0.3
 - Fixed bug of multiple selection overwriting prefix.
 - Fixed bug of pasting, which made string upper case.

@@ -1,6 +1,6 @@
 "use strict";
 // Created by Juan Camilo Osorio (JCOC611 - jcoc611.com).
-// Version 1.0.3. (Beta, stable).
+// Version 1.1.0. (Beta, stable).
 // Consider giving back by sharing your own code!
 // Licensed under the MIT License. 
 // http://www.opensource.org/licenses/mit-license.php
@@ -156,7 +156,7 @@
 
 			// Remove prefix if necessary
 			if(prefix && val.substr(0, prefix.length) == prefix)
-				val = val.substr(this.data("prefix"));
+				val = val.substr(prefix.length);
 			// Remove suffix if necessary
 			if(suffix && val.substr(val.length - suffix.length) == suffix)
 				val = val.substr(0, val.length - suffix.length);
@@ -238,6 +238,7 @@
 		// Remove previous prefix (if it's there)
 		if(prefix && val.substr(0, prefix.length) == prefix){
 			this.val(val.substr(prefix.length, val.length - prefix.length));
+			val = this.val();
 		}
 
 		// Overload for .prefix([...], index), an array of prefixes.
@@ -256,8 +257,9 @@
 		this.data("prefix", pre);
 		this.trigger("prefixchange", [pre, index || 0]);
 
+		// Allow placeholder if no value
 		// Add prefix if it's not already there
-		if(this.val().indexOf(pre) != 0){
+		if(!(this.affixValue() == "" && this.attr("placeholder")) && val.indexOf(pre) != 0){
 			this.val(pre + this.val());
 		}
 
@@ -422,6 +424,16 @@
 				val = prefix + val;
 				$(this).val(val);
 			}
+			// If input has placeholder and is empty
+			// show placeholder
+			if($(this).affixValue() == "" && $(this).attr("placeholder")){
+				$(this).val("");
+			}
+		}).on("focus", function(e){
+			var val = $(this).affixValue();
+			if(val == ""){
+				$(this).affixValue("");
+			}
 		});
 		return this;
 	};
@@ -503,8 +515,10 @@
 		this.data("suffix", suff);
 		this.trigger("suffixchange", [suff, index || 0]);
 
+		// Allow for display of placeholder
 		// Add suffix if it's not already there
-		if(this.val().substr(this.val().length - suff.length) !== suff){
+		if(!(this.affixValue() == "" && this.attr("placeholder"))
+			&& this.val().substr(this.val().length - suff.length) !== suff){
 			this.val(this.val() + suff);
 		}
 
@@ -667,6 +681,29 @@
 				// Else re-add original suffix
 				val += suffix;
 				$(this).val(val);
+			}
+			// If input has placeholder and is empty
+			// show placeholder
+			if($(this).affixValue() == "" && $(this).attr("placeholder")){
+				$(this).val("");
+			}
+		}).on("focus", function(e){
+			var t = $(this), val = t.affixValue();
+			// If input is empty, show suffix
+			// And move caret to correct position
+			if(val == ""){
+				t.affixValue("");
+				var pos = 0;
+				if(t.data("prefix")){
+					pos = t.data("prefix").length;
+				}
+				setTimeout(function(){
+					t.caret({
+						start: pos,
+						end: pos
+					});
+				}, 1);
+				e.preventDefault();
 			}
 		});
 		return this;
