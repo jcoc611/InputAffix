@@ -1,6 +1,6 @@
 "use strict";
 // Created by Juan Camilo Osorio (JCOC611 - jcoc611.com).
-// Version 1.1.0. (Beta, stable).
+// Version 1.1.1. (Beta, stable).
 // Consider giving back by sharing your own code!
 // Licensed under the MIT License. 
 // http://www.opensource.org/licenses/mit-license.php
@@ -47,13 +47,17 @@
 		var start, end, t = this[0];
 		// For overloading.
 		// .caret({start:..., end:...})
-		if (typeof options === "object" && typeof options.start === "number" && typeof options.end === "number") {
+		//      or ({start ...})
+		if (typeof options === "object" && typeof options.start === "number") {
 			start = options.start;
-			end = options.end;
+			if(typeof options.end === "number") end = options.end;
+			else end = options.start;
 		// .caret(start, end)
-		} else if (typeof options === "number" && typeof opt2 === "number") {
+		//      or (start)
+		} else if (typeof options === "number") {
 			start = options;
-			end = opt2;
+			if(typeof opt2 === "number") end = opt2;
+			else end = start;
 		// .caret("str")
 		} else if (typeof options === "string") {
 			if ((start = t.value.indexOf(options)) > -1) end = start + options.length;
@@ -253,8 +257,9 @@
 		// Restore prefix-list
 		}else this.data("prefix-list", false);
 
-		// Set new prefix
+		// Set new prefix data
 		this.data("prefix", pre);
+		this.data("prefixQueue", 0);
 		this.trigger("prefixchange", [pre, index || 0]);
 
 		// Allow placeholder if no value
@@ -281,64 +286,76 @@
 						if(prefixList[z].substr(0, 1) == input){
 							t.prefix(z);
 							var newPrefix = t.prefix();
-							t.caret({
-								start: 1,
-								end: 1
-							});
+							t.caret({	 start: 1 });
 							e.preventDefault();
 							return;
 						}
 					}
 				}
+				// Allow to change prefix if a list is used
 				if(prefixList && val.substr(0, pre.length) != pre) return;
+
+				var prefixQueue = t.data("prefixQueue");
 				if(caret.start == caret.end && prefix.substr(caret.start, 1) == input){
-					t.caret({start:caret.start + 1, end:caret.start + 1});
+					t.caret(caret.start);
+					t.data("prefixQueue", caret.start + 1);
 					e.preventDefault();
-				}else if(caret.start < prefix.length && prefix.substr(caret.start, 1) == input){
+				}else if(caret.start != caret.end && prefix.substr(caret.start, 1) == input){
 					var newVal = prefix + val.substr(caret.end);
 					if(t.data("suffix")){
 						newVal += t.data("suffix");
 					}
 					t.val(newVal);
-					t.caret({start:caret.start + 1, end:caret.start + 1});
+					t.caret(caret.start + 1);
 					e.preventDefault();
 				}else{
-					var end = caret.end;
-					if(end == caret.start) end = prefix.length;
-					else if(end < prefix.length) end += prefix.length;
-					t.caret({start:prefix.length, end:end});
+					if(caret.start == caret.end && prefixQueue == caret.start){
+						var start = caret.start + prefix.length;
+
+						t.val(prefix + val.substr(0, caret.start) + input + val.substr(prefix.length));
+						t.caret(start+1);
+						t.data("prefixQueue", 0);
+						e.preventDefault();
+					}else{
+						t.caret({ start: prefix.length, end: Math.max(caret.end, prefix.length) });
+					}
 				}
 			}
 		}).on("keydown", function(e){
-			var caret = $(this).caret(),
-				prefix = $(this).data("prefix");
+			var $t = $(this),
+				caret = $t.caret(),
+				prefix = $t.data("prefix");
 			// Backspace & delete fix 
 			if(e.which == 8 || e.which == 46){
 				// Allow for backspace & delete if prefix list is used
-				if($(this).data("prefix-list")) return;
+				if($t.data("prefix-list")) return;
+
 				// Else prevent it:
-				if(e.which == 8 && caret.start <= prefix.length && caret.start == caret.end) e.preventDefault();
-				else if(caret.start < prefix.length && caret.start == caret.end) e.preventDefault();
-				else if(caret.start < prefix.length && caret.end == prefix.length){
-					$(this).caret({start:prefix.length, end:Math.max(caret.end, prefix.length)});
+				// Backspace on prefix
+				// if(e.which == 8 && caret.start <= prefix.length && caret.start == caret.end) e.preventDefault();
+				if(e.which == 8 && caret.end <= prefix.length){
+					$t.caret(prefix.length);
 					e.preventDefault();
+				}else if(caret.end < prefix.length){
+					$t.caret(prefix.length);
 				}else if(caret.start < prefix.length){
-					$(this).caret({start:prefix.length, end:Math.max(caret.end, prefix.length)});
+					$t.caret({ start:prefix.length, end:caret.end });
 				}
+				
 			// Paste fix position
 			}else if(e.which == 86 && e.ctrlKey){
 				// If prefix list is used, do nothing weird
-				if($(this).data("prefix-list")) return;
+				if($t.data("prefix-list")) return;
 				// Handle caret positions
 				if(caret.start < prefix.length){
 					var end = caret.end;
 					if(end < prefix.length) end += prefix.length;
-					$(this).caret({start:prefix.length, end:end});
+					$t.caret({start:prefix.length, end:end});
 				}
 			// Home/start fix
 			}else if(e.which == 36 && e.ctrlKey){
-				if(e.shiftKey) $(this).caret({start:prefix.length, end:Math.max(caret.start, prefix.length)});
-				else $(this).caret({start:prefix.length, end:prefix.length});
+				if(e.shiftKey) $t.caret({start:prefix.length, end:Math.max(caret.start, prefix.length)});
+				else $t.caret({start:prefix.length, end:prefix.length});
 				e.preventDefault();
 			}
 		}).on("paste", function(e){
@@ -513,6 +530,7 @@
 
 		// Set new suffix
 		this.data("suffix", suff);
+		this.data("suffixQueue", 0);
 		this.trigger("suffixchange", [suff, index || 0]);
 
 		// Allow for display of placeholder
@@ -528,7 +546,8 @@
 				caret = t.caret(),
 				val = t.val(),
 				suffix = t.data("suffix");
-			if(caret.end > val.length - suffix.length){
+
+			if(caret.end >= val.length - suffix.length){
 				var suffixList = t.data("suffix-list"),
 					input = String.fromCharCode(e.which);
 				// If a suffix list was used, update current suffix if necessary.
@@ -547,40 +566,59 @@
 						}
 					}
 				}
+				// Allow change of suffix if list is used
 				if(suffixList && val.substr(val.length - suff.length) != suffix) return;
-				if(caret.start == caret.end && suffix.substr(caret.end - val.length + suffix.length, 1) == String.fromCharCode(e.which)){
+
+				if(caret.start == caret.end && suffix.substr(caret.end - val.length + suffix.length, 1) == input){
 					t.caret({start:caret.end + 1, end:caret.end + 1});
+					t.data("prefixQueue", caret.end - val.length + suffix.length + 1);
 					e.preventDefault();
 				}else{
-					var start = caret.start;
-					if(start > val.length - suffix.length) start -= suffix.length;
-					t.caret({start: start, end: val.length - suffix.length});
+					// IE-specific overwrite mode fix
+					var overwriteMode = document.queryCommandValue("OverWrite");
+
+					if(caret.start == caret.end && t.data("prefixQueue") == caret.end - val.length + suffix.length){
+						t.val(val.substr(0, caret.start) + input + suffix);
+						t.caret({start: caret.start+1, end: caret.start+1});
+						e.preventDefault();
+					}else if(overwriteMode){
+						t.val(val.substr(0, caret.start) + input + suffix);
+						t.caret(val.length - suffix.length + 1);
+						e.preventDefault();
+					} else{
+						t.caret({
+							start: Math.min(caret.start, val.length- suffix.length),
+							end: val.length - suffix.length
+						});
+					}
 				}
 			}else if(caret.end == val.length - suffix.length && caret.start == caret.end 
-				&& suffix.substr(caret.end - val.length + suffix.length, 1) == String.fromCharCode(e.which)){
+				&& suffix.substr(caret.end - val.length + suffix.length, 1) == input){
 				t.caret({start:caret.end + 1, end:caret.end + 1});
 				e.preventDefault();
 			}
 
 		}).on("keydown", function(e){
-			var caret = $(this).caret(),
-				val = $(this).val(),
-				suffix = $(this).data("suffix");
+			var $t = $(this),
+				caret = $t.caret(),
+				val = $t.val(),
+				suffix = $t.data("suffix");
 			// Backspace & delete fix 
 			if(e.which == 8 || e.which == 46){
 				// Allow for backspace & delete if suffix list is used
-				if($(this).data("suffix-list")) return;
+				if($t.data("suffix-list")) return;
+
 				// Else continue
-				if(e.which == 46 && caret.end >= val.length - suffix.length && caret.start == caret.end){
-					$(this).caret({start: val.length - suffix.length, end: val.length - suffix.length});
-					e.preventDefault();
-				}else if(e.which == 46 && caret.end >= val.length - suffix.length && caret.start == caret.end){
-					e.preventDefault();
-				}else if(caret.start > val.length - suffix.length && caret.start == val.length - suffix.length){
-					$(this).caret({start:val.length - suffix.length, end:val.length - suffix.length});
+				if(e.which == 46 && caret.start >= val.length - suffix.length){
+					$t.caret(val.length - suffix.length);
 					e.preventDefault();
 				}else if(caret.end > val.length - suffix.length){
-					$(this).caret({end:val.length - suffix.length, start:Math.min(caret.start, val.length - suffix.length)});
+					$t.caret({
+						start: Math.min(caret.start, val.length - suffix.length),
+						end: val.length - suffix.length
+					});
+					var prefix = $t.data("prefix");
+					if(prefix && val.length == prefix.length + suffix.length) e.preventDefault();
 				}
 			// Paste fix position
 			}else if(e.which == 86 && e.ctrlKey){
@@ -588,12 +626,12 @@
 				if(caret.end > val.length - suffix.length){
 					var start = caret.start;
 					if(start > val.length -  suffix.length) start -= suffix.length;
-					$(this).caret({start:start, end:val.length - suffix.length});
+					$t.caret({start:start, end:val.length - suffix.length});
 				}
 			// End fix
 			}else if(e.which == 35 && e.ctrlKey){
-				if(e.shiftKey) $(this).caret({start:Math.min(val.length - suffix.length, caret.end), end:val.length - suffix.length});
-				else $(this).caret({start:val.length - suffix.length, end:val.length - suffix.length});
+				if(e.shiftKey) $t.caret({start:Math.min(val.length - suffix.length, caret.end), end:val.length - suffix.length});
+				else $t.caret({start:val.length - suffix.length, end:val.length - suffix.length});
 				e.preventDefault();
 			}
 		}).on("paste", function(e){

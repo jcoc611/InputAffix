@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>jQuery InputAffix v1.1.0 Test</title>
+	<title>jQuery InputAffix v1.1.1 Test</title>
 	<meta charset="UTF-8">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<!-- <script type="text/javascript" src="http://static.jcoc611.com/hosted/js/InputAffix.0.1.3.min.js"></script> -->
 	<script src="InputAffix.js"></script>
 	<script type="text/javascript">
 	$(function(){
 		$("#testPrefix").prefix("Test: ");
 		$("#testSuffix").suffix("%");
+		$("#testSuffix2").suffix(" Suffix");
 		$("#testDual").prefix("Angle: ").suffix("°");
 		$("#testMultiplePrefixes").prefix(["#", "$", "&"]).on("prefixchange", function(e, pre){
 			$("#multiplePrefixesMessage").text(pre);
@@ -27,6 +27,7 @@
 	<h1>Input Affix v1.1.0 Tests</h1>
 	<span>Prefix test <i>(Test: )</i> </span><input id="testPrefix" value="something"></input><br/><br/>
 	<span>Suffix test <i>(%)</i> </span><input id="testSuffix" value="100"></input><br/><br/>
+	<span>Suffix test 2 <i>( Suffix)</i> </span><input id="testSuffix2" value="test"></input><br/><br/>
 	<span>Dual test <i>(Angle: ...°)</i> </span><input id="testDual" value="100"></input><br/><br/>
 	<span>Multiple prefixes <i>(#, $, or &amp;)</i></span><input id="testMultiplePrefixes" value="000"></input><br/><br/>
 	<span>Current Prefix for input above: <i id="multiplePrefixesMessage">#</i></span><br/><br/>

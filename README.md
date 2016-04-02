@@ -30,7 +30,7 @@ If you want to use the hosted libraries, just add the following to the head of y
 
 ```html
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="http://static.jcoc611.com/hosted/js/InputAffix.1.1.0.min.js"></script>
+<script src="https://static.jcoc611.com/hosted/js/InputAffix.1.1.1.min.js"></script>
 ```
 
 Otherwise, you can host your own version of jQuery and Input Affix to suit your needs. After you have included both libraries, adding a prefix or suffix is easier than writing the HTML for them. Check the documentation out for the detailed explanation:
@@ -147,7 +147,7 @@ This event is triggered every time the suffix of an element is changed. It is pa
 ## Hosted library
 In addition to the GitHub repo, I will also be hosting the minified version of the library at
 
-    http://static.jcoc611.com/hosted/js/InputAffix.1.1.0.min.js
+    https://static.jcoc611.com/hosted/js/InputAffix.1.1.1.min.js
 
 ## Collaborating
 If you have any issues with the code, or have found any bugs, submit an Issue Ticket! Also, if you want to improve/change anything just fork the repo, make your changes, and submit a pull request. I will review it as soon as possible.

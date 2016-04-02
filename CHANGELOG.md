@@ -1,5 +1,10 @@
 ## Description of changes by version
 
+# v1.1.1
+- Fixed a bug with partially writing over prefixes/suffixes (Issue #1).
+- Better support for Internet Explorer.
+- Fixed handling issues on delete and backspace.
+
 # v1.1.0
 - Added support for placeholders
 - Fixed a bug with affixValue()
